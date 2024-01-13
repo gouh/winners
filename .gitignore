@@ -1,0 +1,47 @@
+###> symfony/framework-bundle ###
+/vendor/
+/var/
+/bin/
+!bin/console
+!bin/phpunit
+/build/
+!/build/bootstrap.php
+/node_modules/
+/npm-debug.log
+.env
+.env.local
+.env.local.php
+.env.*.local
+.env.overrides
+/public/bundles/
+/public/build/
+/config/secrets/dev/
+/config/secrets/prod/
+###< symfony/framework-bundle ###
+
+###> symfony/phpunit-bridge ###
+/phpunit.xml
+/.phpunit.result.cache
+###< symfony/phpunit-bridge ###
+
+###> symfony/web-server-bundle ###
+/.web-server-pid
+###< symfony/web-server-bundle ###
+
+### PhpStorm ###
+/.idea/
+###< PhpStorm ###
+
+# Various IDEs
+/.nbproject/
+/.project/
+/.settings/
+
+# Various editors
+*.swp
+*~
+.idea
+.DS_Store
+/.vim/
+/.vscode/
+Thumbs.db
