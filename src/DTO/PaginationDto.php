@@ -15,13 +15,14 @@ class PaginationDto
     /** @var int */
     public int $totalPages;
     /** @var int[] */
-    public array $nextPages;
-    /** @var int[] */
     public array $prevPages;
-    /** @var int|null */
-    public ?int $nextPage;
+    /** @var int[] */
+    public array $nextPages;
+
     /** @var int|null */
     public ?int $prevPage;
+    /** @var int|null */
+    public ?int $nextPage;
 
     public function __construct(
         $totalItems,
@@ -29,20 +30,20 @@ class PaginationDto
         $totalInPage,
         $currentPage,
         $totalPages,
-        $nextPages,
         $prevPages,
+        $nextPages,
+        $prevPage,
         $nextPage,
-        $prevPage
     ) {
         $this->totalItems = $totalItems;
         $this->itemsPerPage = $itemsPerPage;
         $this->totalInPage = $totalInPage;
         $this->currentPage = $currentPage;
         $this->totalPages = $totalPages;
-        $this->nextPages = $nextPages;
         $this->prevPages = $prevPages;
-        $this->nextPage = $nextPage;
+        $this->nextPages = $nextPages;
         $this->prevPage = $prevPage;
+        $this->nextPage = $nextPage;
     }
 
     public function toArray(): array
@@ -63,7 +64,7 @@ class PaginationDto
         int $page,
         int $totalInPage,
         int $totalItems,
-        int $itemsPerPage = 10,
+        int $itemsPerPage = 30,
         int $limitAround = 5
     ): PaginationDto {
         $itemsPerPage = max(1, $itemsPerPage);
@@ -85,10 +86,10 @@ class PaginationDto
             $totalInPage,
             $page,
             $totalPages,
-            $nextPages,
             $prevPages,
-            count($nextPages) ? $nextPages[0] : null,
+            $nextPages,
             count($prevPages) ? end($prevPages) : null,
+            count($nextPages) ? $nextPages[0] : null,
         );
     }
 }

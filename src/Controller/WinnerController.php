@@ -68,7 +68,7 @@ class WinnerController extends AbstractController
     {
         $response = ApiResponse::createResponse(Response::HTTP_INTERNAL_SERVER_ERROR, self::TRY_AGAIN_MESSAGE);
         try {
-            $itemsPerPage = intval($request->query->get('itemsPerPage', 10));
+            $itemsPerPage = intval($request->query->get('itemsPerPage', 30));
             $page = intval($request->query->get('page', 1));
 
             $results = $this->winnerRepository->getPaginated($itemsPerPage, $page);
