@@ -17,7 +17,7 @@ class Winner
     #[ORM\Column(length: 100)]
     private ?string $name = null;
 
-    #[ORM\Column(type: Types::SMALLINT)]
+    #[ORM\Column(type: Types::SMALLINT, unique: true)]
     private ?int $position = null;
 
     public function getId(): ?int
