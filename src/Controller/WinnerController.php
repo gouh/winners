@@ -68,10 +68,12 @@ class WinnerController extends AbstractController
     {
         $response = ApiResponse::createResponse(Response::HTTP_INTERNAL_SERVER_ERROR, self::TRY_AGAIN_MESSAGE);
         try {
+            $allQueryParams = $request->query->all();
+
             $itemsPerPage = intval($request->query->get('itemsPerPage', 30));
             $page = intval($request->query->get('page', 1));
 
-            $results = $this->winnerRepository->getPaginated($itemsPerPage, $page);
+            $results = $this->winnerRepository->getPaginated($itemsPerPage, $page, $allQueryParams['orderBy']);
             $total = $this->winnerRepository->getTotal();
 
             $pagination = PaginationDto::calcPagination($page, count($results), $total, $itemsPerPage);

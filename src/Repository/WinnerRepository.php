@@ -24,19 +24,31 @@ class WinnerRepository extends LazyServiceEntityRepository
     }
 
     /**
-     * @param int $itemsPerPage
-     * @param int $page
+     * @param int   $itemsPerPage
+     * @param int   $page
+     * @param array $orderBy
      *
      * @return float|int|mixed|string
      */
-    public function getPaginated(int $itemsPerPage, int $page): mixed
+    public function getPaginated(int $itemsPerPage, int $page, array $orderBy): mixed
     {
+        $orderByValue = ['position' => 'desc'];
+
+        if (isset($orderBy['position'])) {
+            $orderByValue = ['position' => $orderBy['position']];
+        }
+
+        if (isset($orderBy['name'])) {
+            $orderByValue = ['name' => $orderBy['name']];
+        }
+
         $queryBuilder = $this->createQueryBuilder('p');
 
         $query = $queryBuilder
             ->orderBy('p.id', 'ASC')
             ->setFirstResult(($page - 1) * $itemsPerPage)
             ->setMaxResults($itemsPerPage)
+            ->orderBy('p.' . array_key_first($orderByValue), $orderByValue[array_key_first($orderBy)])
             ->getQuery();
 
         return $query->getResult();
@@ -76,6 +88,7 @@ class WinnerRepository extends LazyServiceEntityRepository
     public function remove($id): string|int|float
     {
         $em = $this->getEntityManager();
+
         return $em->createQueryBuilder()
             ->delete(Winner::class, 'c')
             ->where('c.id = :id')
