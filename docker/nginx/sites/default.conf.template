@@ -2,11 +2,6 @@ server {
 	listen *:80;
 	server_name www.${PROJECT_NAME}.com;
 
-	add_header 'Access-Control-Allow-Headers' 'User-Agent, Content-Type, CSC-KEY';
-	add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS, PUT, DELETE';
-	add_header 'Access-Control-Expose-Headers' 'CSC-KEY';
-	add_header 'Access-Control-Max-Age' '60';
-
 	gzip on;
 	gzip_vary on;
 	gzip_proxied any;
@@ -25,6 +20,22 @@ server {
 
 		keepalive_timeout 65;
 		keepalive_requests 1000;
+
+        add_header 'Access-Control-Allow-Origin' '*';
+        add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS, PUT, DELETE';
+        add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization';
+        add_header 'Access-Control-Expose-Headers' 'Content-Length,Content-Range';
+
+        if ($request_method = 'OPTIONS') {
+            add_header 'Access-Control-Allow-Origin' '*';
+            add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS, PUT, DELETE';
+            add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization';
+            add_header 'Access-Control-Expose-Headers' 'Content-Length,Content-Range';
+            add_header 'Access-Control-Max-Age' 1728000;
+            add_header 'Content-Type' 'text/plain; charset=utf-8';
+            add_header 'Content-Length' 0;
+            return 204;
+        }
 	}
 
 	location /uploads {
